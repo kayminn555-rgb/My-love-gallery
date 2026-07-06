@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 1st Anniversary My Love ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Padauk', 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #2c001e, #ff4e50, #f9d423, #6a11cb);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #fff;
+            perspective: 1000px;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+       
+        /* Floating Background Particles */
+        .heart-bg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; pointer-events: none; }
+        .heart { position: absolute; color: rgba(255, 255, 255, 0.4); font-size: 24px; animation: floatUp 6s linear infinite; }
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) scale(0.5) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.3) rotate(360deg); opacity: 0; }
+        }
+
+        /* Glassmorphism Premium Card */
+        .card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), inset 0 0 15px rgba(255,255,255,0.1);
+            width: 90%; max-width: 380px;
+            padding: 35px 25px;
+            text-align: center;
+            z-index: 10; display: none;
+            position: absolute;
+            animation: romanticPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            
+            /* ပြင်ဆင်ချက် - ဖုန်းစခရင်သေးရင် အပေါ်အောက် ဆွဲကြည့်လို့ရအောင် */
+            max-height: 85vh;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+        .card::-webkit-scrollbar { display: none; }
+        
+        @keyframes romanticPop {
+            0% { transform: scale(0.6) rotateX(-30deg); opacity: 0; filter: blur(10px); }
+            100% { transform: scale(1) rotateX(0deg); opacity: 1; filter: blur(0); }
+        }
+        .active { display: block; }
+
+        /* Envelope Design */
+        .envelope-wrapper { position: relative; cursor: pointer; z-index: 10; text-align: center; animation: bounce 2.5s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        .envelope {
+            width: 140px; height: 95px; background: #ffffff; border-radius: 8px; position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border-bottom: 48px solid #f0f0f0; border-left: 70px solid #f7f7f7; border-right: 70px solid #f7f7f7; border-top: 48px solid #ff4b72;
+        }
+        .env-text { margin-top: 25px; color: #fff; font-weight: bold; font-size: 1.1rem; text-shadow: 0 2px 5px rgba(0,0,0,0.3); padding: 0 15px; }
+
+        h2 { font-size: 1.4rem; margin-bottom: 15px; color: #fff; text-shadow: 0 2px 4px rgba(0,0,0,0.2); font-weight: 700; }
+        p { font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; color: #fdfdfd; }
+       
+        /* Cartoon Animation Sticker Styling */
+        .sticker { width: 110px; height: 110px; object-fit: contain; margin: 0 auto 15px; display: block; }
+
+        /* Buttons Styling */
+        .btn-group { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .btn {
+            background: linear-gradient(135deg, #ff4e50, #f9d423); color: white; border: none;
+            padding: 14px 20px; border-radius: 50px; font-size: 1rem; font-family: 'Padauk', sans-serif;
+            cursor: pointer; transition: all 0.3s ease; font-weight: bold;
+            box-shadow: 0 5px 15px rgba(249, 212, 35, 0.4);
+        }
+        .btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 8px 20px rgba(249, 212, 35, 0.6); }
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.15); border: 1.5px solid rgba(255, 255, 255, 0.6); color: white; box-shadow: none;
+        }
+        .btn-outline:hover { background: #fff; color: #ff4e50; box-shadow: 0 5px 15px rgba(255,255,255,0.3); }
+
+        /* Memory Photo Box */
+        .mem-photo { 
+            width: 100%; 
+            /* ပြင်ဆင်ချက် - ပုံရှည်နေလို့ အောက်က ခလုတ်ပျောက်မသွားစေရန် အမြင့်ကန့်သတ်ထားသည် */
+            max-height: 300px;
+            object-fit: contain; 
+            border-radius: 20px; margin-bottom: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.5); 
+        }
+
+        /* Trick Question Alignment */
+        .q3-buttons { display: flex; justify-content: center; gap: 20px; align-items: center; margin-top: 25px; min-height: 60px; }
+        #btn-yes { transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 15; }
+
+        /* --- ADVANCED WIND-BLOWN FLY-IN GALLERY EFFECT --- */
+        .gallery-screen { display: none; width: 100%; height: 100%; position: absolute; z-index: 12; }
+        .gallery-screen.active { display: block; }
+        .flying-photo-box {
+            position: absolute; width: 280px; height: 380px; top: 50%; left: 50%;
+            margin-top: -210px; margin-left: -140px;
+            background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px; padding: 15px; border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            opacity: 0; transform: scale(2.5) translateZ(300px) rotate(25deg);
+            filter: blur(20px); pointer-events: none;
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .flying-photo-box.blown-in {
+            opacity: 1; transform: scale(1) translateZ(0) rotate(var(--rot));
+            filter: blur(0px); pointer-events: auto;
+        }
+        .gallery-img { 
+            width: 100%; 
+            height: 82%; 
+            /* ပြင်ဆင်ချက် - cover အစား contain ပြောင်းထား၍ ပုံမဖြတ်တော့ပါ */
+            object-fit: contain; 
+            border-radius: 18px; 
+        }
+        .gallery-next-btn { margin-top: 10px; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgm-audio" loop>
+        <source src="https://cs1.mp3.pm/download/205694078/V0JXOVpSUE1BTE92QnFEQy85Tm1Bd3N4Q2lsdkxZUzhVYTFaMU1xMnRwZEYxRFRNT1VTMklBY0Q0aFNQZ3MzREx6dUwzMlF3RWJCYlVPdDRKMi9udzRJY1E1RWVsOWF3L2tiMlhnYnJDUWtWYVZqMGFNbTlkdHJyWk5xR2h3b1E/Edd_Sheeran_-_Perfect_(mp3.pm).mp3" type="audio/mpeg">
+    </audio>
+    <audio id="click-audio">
+        <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="heart-bg" id="heart-bg"></div>
+
+    <div class="envelope-wrapper active" id="step-0" onclick="openEnvelope()">
+        <div class="envelope"></div>
+        <div class="env-text">စုစု အတွက် စာအိတ်လေး... ထိကြည့်လိုက်ပါနော် 💌</div>
+    </div>
+
+    <div class="card" id="step-1">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3cDRteXJzYmw3dnR6bXJvM2Y5bDQwcHhqZjdzeXc4Mm92MWV0eWl3YSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/SifkeS1WJAqmhrJlOw/giphy.webp" class="sticker" alt="Sticker 1">
+        <h2>Happy 1 Year Anniversary ပါ မောင့်အချစ်ကလေး 🎉</h2>
+        <p>နောက်ထပ် နှစ်တွေအများကြီး အတူ စုစုနဲ့ ဖြတ်သန်းချင်တယ်နော် အချစ်ကလေး။ စုစုကို အများကြီးချစ်တယ်။ ❤️</p>
+        <button class="btn" onclick="nextStep('step-1', 'step-2')">ရှေ့ဆက်သွားမယ် ➔</button>
+    </div>
+
+    <div class="card" id="step-2">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3MTBxMWpwaG9wM2JxZXc3aDI3dHM2MzcyeXdzb21jeHI2MTVvZDN3byZlcD12MV9naWZzX3NlYXJjaCZjdD1n/7y4Nc95399hsr24oYc/giphy.webp" class="sticker" alt="Sticker Q1">
+        <h2>မေးခွန်း (၁) 🤔</h2>
+        <p>မောင်တို့ စခင်တဲ့နေ့က ဘယ်နေ့လဲ?</p>
+        <div class="btn-group">
+            <button class="btn btn-outline" onclick="wrongAnswer()">14.2.2023</button>
+            <button class="btn btn-outline" onclick="rightAnswerQ1()">18.1.2023</button>
+            <button class="btn btn-outline" onclick="wrongAnswer()">1.1.2023</button>
+        </div>
+    </div>
+
+    <div class="card" id="step-2-success">
+        <img src="https://github.com/kayminn555-rgb/My-love-gallery/blob/main/First.webp?raw=true" alt="First Chat" class="mem-photo" id="my-chat-photo">
+        <p>ဒီကနေ စခဲ့တာ... အခု စုစုက မောင့်ဘဝအတွက် မရှိမဖြစ် မိန်းကလေးတစ်ယောက် ဖြစ်နေပြီ။ 💕</p>
+        <button class="btn" onclick="nextStep('step-2-success', 'step-3')">နောက်မေးခွန်းတစ်ခု ➔</button>
+    </div>
+
+    <div class="card" id="step-3">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2E3YzR6anFxNjMxaW1tYjAxcDkwdGQ3MzF1MDlxcWt3emZsdHcxNCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/fvN5KrNcKKUyX7hNIA/200.webp" class="sticker" alt="Sticker Q2">
+        <h2>မေးခွန်း (၂) 👩‍❤️‍👨</h2>
+        <p>စုစုနဲ့ မောင် ရည်းစားစဖြစ်တဲ့နေ့က ဘယ်နေ့လဲဗျ?</p>
+        <div class="btn-group">
+            <button class="btn btn-outline" onclick="wrongAnswer()">6.7.2025</button>
+            <button class="btn btn-outline" onclick="rightAnswerQ2()">7.7.2025</button>
+            <button class="btn btn-outline" onclick="wrongAnswer()">7.8.2025</button>
+        </div>
+    </div>
+
+    <div class="card" id="step-3-success">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3NzNnNDlpMWNuMW81OW40NjRpYzNkeXYyeTh2Nm0ydWprcmtxM3QxbiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/7TJXK0wFlYVeJYk3yH/giphy.webp" class="sticker" alt="Success Sticker">
+        <h2>အိုး... တော်လိုက်တာ 👏😘</h2>
+        <p>မောင့် အချစ်ကလေးက အကုန်မှတ်မိနေတာပဲ။</p>
+        <button class="btn" onclick="nextStep('step-3-success', 'step-4')">နောက်တစ်ခု သွားမယ် ➔</button>
+    </div>
+
+    <div class="card" id="step-4">
+        <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExZXRianRjY2h1MmtiaHdid3NqNzYxOWExNWVxbGpwc29lcDRwZjhleiZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/HNAB0k1F4NaDoJBtpr/giphy.webp" class="sticker" alt="Trick Sticker">
+        <h2>နောက်ဆုံးမေးခွန်း 🥺</h2>
+        <p>စုစု မောင့်ကို ချစ်လားဗျ?</p>
+        <div class="q3-buttons">
+            <button class="btn" id="btn-yes" onclick="startFlyingGallery()">ချစ်တယ်</button>
+            <button class="btn btn-outline" id="btn-no" onclick="makeYesBigger()">မချစ်ဘူး</button>
+        </div>
+    </div>
+
+    <div class="gallery-screen" id="gallery-screen">
+       
+        <div class="flying-photo-box" id="gallery-1" style="--rot: -5deg; z-index: 21;">
+           <img src="https://github.com/kayminn555-rgb/My-love-gallery/blob/main/IMG_1938.webp?raw=true" class="gallery-img" alt="Memory 1">
+            <button class="btn gallery-next-btn" onclick="nextFlyingPhoto(1, 2)">ကြည့်ပြီးပြီ ➔</button>
+        </div>
+
+        <div class="flying-photo-box" id="gallery-2" style="--rot: 6deg; z-index: 22;">
+            <img src="https://github.com/kayminn555-rgb/My-love-gallery/blob/main/IMG_4211.webp?raw=true" class="gallery-img" alt="Memory 2">
+            <button class="btn gallery-next-btn" onclick="nextFlyingPhoto(2, 3)">ကြည့်ပြီးပြီ ➔</button>
+        </div>
+
+        <div class="flying-photo-box" id="gallery-3" style="--rot: -3deg; z-index: 23;">
+            <img src="https://github.com/kayminn555-rgb/My-love-gallery/blob/main/att.yIdgute8wsZzhQBgdx3MzBcUCL6cz0Hs219eg8NO1sU.jpg?raw=true" class="gallery-img" alt="Memory 3">
+            <button class="btn gallery-next-btn" onclick="goToFinalScreen()">နောက်ဆုံးစာလွှာ ➔</button>
+        </div>
+       
+    </div>
+
+    <div class="card" id="step-6">
+        <img src="https://media2.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3eXk5NHJzdWVvMTdwOXQzdmhyNjJ3YmcyaTExY3NvaWZhcWJ2NnlvZyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/eiRpSPB8OSGVcbkOIJ/giphy.webp" class="sticker" alt="Love Animation">
+        <h2>Happy 1 Year Anniversary ပါ အချစ်ကလေး 💖</h2>
+        <p style="font-size: 0.95rem; text-align: justify;">ချစ်သက်တမ်း တစ်နှစ်ပြည့်တဲ့နေ့မှာ သူများတွေမရနိုင်တဲ့ ခံစားချက်မျိုးရပြီ။ မောင့်အပေါ် ချစ်ခြင်းမေတ္တာတွေ ပိုပေးနိုင်ပြီး ပိုဂရုစိုက်ပေးနိုင်ပါစေနော်။ မောင်လဲ မောင့်ဘဝတစ်လျှောက်လုံး စုစုကို ဂရုစိုက်ပြီး ချစ်သွားပေးမယ်။ 👩‍❤️‍👨♾️</p>
+    </div>
+
+    <script>
+        // ပြင်ဆင်ချက် - အသံဖွင့်ရန် Code များ
+        const bgm = document.getElementById('bgm-audio');
+        const clickSound = document.getElementById('click-audio');
+        bgm.volume = 0.5;
+
+        function playClickSound() {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(e => console.log(e));
+        }
+
+        document.querySelectorAll('.btn, .envelope-wrapper').forEach(el => {
+            el.addEventListener('click', playClickSound);
+        });
+
+        // မူရင်း Script များ
+        const bg = document.getElementById('heart-bg');
+        for (let i = 0; i < 25; i++) {
+            let heart = document.createElement('div');
+            heart.innerHTML = ['❤️', '💖', '✨', '💕', '🌸'][Math.floor(Math.random() * 5)];
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            bg.appendChild(heart);
+        }
+
+        function nextStep(current, next) {
+            document.getElementById(current).classList.remove('active');
+            document.getElementById(next).classList.add('active');
+        }
+
+        function openEnvelope() {
+            nextStep('step-0', 'step-1');
+            // စာအိတ်ဖွင့်သည်နှင့် သီချင်းဖွင့်ရန်
+            bgm.play().catch(e => console.log(e));
+        }
+
+        function wrongAnswer() {
+            alert("Try again ပါနော် အသည်းလေး 🥺 အဖြေမှားနေပါတယ်နော်...");
+        }
+
+        function rightAnswerQ1() {
+            nextStep('step-2', 'step-2-success');
+        }
+
+        function rightAnswerQ2() {
+            nextStep('step-3', 'step-3-success');
+        }
+
+        let yesScale = 1;
+        function makeYesBigger() {
+            yesScale += 0.4;
+            let btnYes = document.getElementById('btn-yes');
+            let btnNo = document.getElementById('btn-no');
+            btnYes.style.transform = `scale(${yesScale})`;
+           
+            const texts = ["သေချာလို့လား? 🥺", "ထပ်စဉ်းစားပါဦးနော်", "ချစ်တယ်လို့ပဲ ဖြေပါနော်", "နှိပ်လို့မရပါဘူးဗျာ"];
+            btnNo.innerText = texts[Math.floor(Math.random() * texts.length)];
+        }
+
+        function startFlyingGallery() {
+            document.getElementById('step-4').classList.remove('active');
+            document.getElementById('gallery-screen').classList.add('active');
+           
+            setTimeout(() => {
+                document.getElementById('gallery-1').classList.add('blown-in');
+            }, 300);
+        }
+
+        function nextFlyingPhoto(currentId, nextId) {
+            let currentCard = document.getElementById('gallery-' + currentId);
+            currentCard.style.transform = 'scale(0.3) translateY(-120vh) rotate(-45deg)';
+            currentCard.style.opacity = '0';
+            currentCard.style.filter = 'blur(15px)';
+           
+            setTimeout(() => {
+                document.getElementById('gallery-' + nextId).classList.add('blown-in');
+            }, 400);
+        }
+
+        function goToFinalScreen() {
+            let lastCard = document.getElementById('gallery-3');
+            lastCard.style.transform = 'scale(0.3) translateY(-120vh) rotate(45deg)';
+            lastCard.style.opacity = '0';
+           
+            setTimeout(() => {
+                document.getElementById('gallery-screen').classList.remove('active');
+                document.getElementById('step-6').classList.add('active');
+            }, 600);
+        }
+    </script>
+</body>
+</html>

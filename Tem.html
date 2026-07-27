@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Surprise For Su Su ❤️</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+Myanmar:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            touch-action: none;
+            user-select: none;
+        }
+        
+        body {
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            background: linear-gradient(135deg, #fff0f5 0%, #ffd1dc 100%);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        /* --- အသံဖွင့်ရန် အစခရင်မ် --- */
+        #start-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        .start-btn {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            background: #ff4b72;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            box-shadow: 0 10px 20px rgba(255, 75, 114, 0.4);
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* --- ဂိမ်း အပိုင်း --- */
+        #game-section {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            display: none;
+        }
+
+        .instruction {
+            position: absolute;
+            top: 15%;
+            width: 100%;
+            text-align: center;
+            font-size: 1.3rem;
+            color: #d81b60;
+            font-weight: 700;
+            animation: floatUpDown 2s ease-in-out infinite;
+            padding: 0 20px;
+            text-shadow: 1px 1px 3px rgba(255,255,255,0.8);
+        }
+
+        #target-heart {
+            position: absolute;
+            top: 15%;
+            right: 15%;
+            font-size: 5rem;
+            filter: drop-shadow(0 4px 10px rgba(216, 27, 96, 0.5));
+            animation: heartbeat 1s infinite alternate;
+            z-index: 5;
+        }
+
+        /* 3D လေး (Bow) နှင့် မြှား (Arrow) နေရာ */
+        .weapon-wrapper {
+            position: fixed;
+            bottom: 15%;
+            left: 5%;
+            width: 180px;
+            height: 180px;
+            transform-origin: center;
+        }
+
+        #bow-wrapper {
+            z-index: 11;
+            pointer-events: none; /* လေးကို တိုက်ရိုက်ဆွဲလို့မရအောင် (မြှားကိုပဲဆွဲရန်) */
+        }
+
+        #arrow-wrapper {
+            z-index: 12;
+            cursor: grab;
+        }
+        #arrow-wrapper:active {
+            cursor: grabbing;
+        }
+
+        #explosion {
+            position: absolute;
+            top: 15%;
+            right: 15%;
+            font-size: 3.5rem;
+            display: none;
+            color: #ff4b72;
+            font-family: 'Dancing Script', cursive;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+            transform: translate(20%, -20%) scale(0.1);
+            z-index: 15;
+        }
+
+        /* --- Surprise အပိုင်း --- */
+        #surprise-section {
+            display: none;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            z-index: 20;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #surprise-section h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4.5rem;
+            color: #ff4b72;
+            text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.8);
+            line-height: 1.3;
+        }
+
+        /* --- Q&A အပိုင်း --- */
+        #qa-section {
+            display: none;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(216, 27, 96, 0.15);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 30;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            position: relative;
+        }
+        
+        #qa-content {
+            position: relative;
+            z-index: 31;
+        }
+
+        .sticker-container {
+            margin-bottom: 20px;
+            min-height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .sticker-img {
+            max-width: 140px;
+            max-height: 140px;
+            border-radius: 10px;
+        }
+
+        #question-text {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            font-weight: 700;
+        }
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            position: relative;
+        }
+        .ans-btn {
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            font-family: 'Noto Sans Myanmar', sans-serif;
+            width: 85%;
+            transition: transform 0.1s;
+        }
+        .ans-btn:active {
+            transform: scale(0.95);
+        }
+        .btn-yes {
+            background: linear-gradient(135deg, #ff4b72, #ff758c);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 75, 114, 0.3);
+            position: relative;
+            z-index: 32;
+        }
+        .btn-no {
+            background-color: #f1f2f6;
+            color: #555;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            z-index: 40; 
+        }
+
+        #final-message {
+            display: none;
+            font-size: 1.1rem;
+            color: #d81b60;
+            font-weight: 700;
+            line-height: 1.8;
+            animation: fadeIn 1.5s forwards;
+        }
+        
+        .btn-back {
+            margin-top: 25px;
+            background: linear-gradient(135deg, #10ac84, #1dd1a1);
+            color: white;
+            box-shadow: 0 5px 15px rgba(29, 209, 161, 0.4);
+            width: auto;
+            padding: 12px 30px;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+        @keyframes floatUpDown {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ဂိမ်းမစခင် -->
+    <div id="start-screen">
+        <button class="start-btn" onclick="startGame()">Surprise လေး ဖောက်ကြည့်ရအောင် 🎁</button>
+    </div>
+
+    <!-- ၁။ ဂိမ်း အပိုင်း -->
+    <div id="game-section">
+        <div class="instruction" id="instruction">
+            အချစ်လေးရေ... <br>မြှားလေးကို နောက်ဆွဲ၊ ချိန်ပြီး လွှတ်ကြည့်ပါ 🎯
+        </div>
+        
+        <div id="target-heart">💖</div>
+        
+        <!-- 3D Realistic Bow (လေး) -->
+        <div id="bow-wrapper" class="weapon-wrapper">
+            <svg viewBox="0 0 200 200" width="100%" height="100%" style="overflow: visible;">
+                <defs>
+                    <linearGradient id="wood-bow" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#5C4033" />
+                        <stop offset="50%" stop-color="#8b5a2b" />
+                        <stop offset="100%" stop-color="#3b2818" />
+                    </linearGradient>
+                    <filter id="shadow">
+                        <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.3"/>
+                    </filter>
+                </defs>
+                <!-- လေးကိုင်း (Wood) -->
+                <path d="M 120,20 Q 180,100 120,180" fill="none" stroke="url(#wood-bow)" stroke-width="12" stroke-linecap="round" filter="url(#shadow)"/>
+                <!-- လေးကြိုး (String) - id ပေးထားသည် ဆွဲလျှင်ကွေးရန် -->
+                <path id="bow-string" d="M 120,20 L 120,100 L 120,180" fill="none" stroke="#e0e0e0" stroke-width="2"/>
+            </svg>
+        </div>
+
+        <!-- 3D Realistic Arrow (မြှား) -->
+        <div id="arrow-wrapper" class="weapon-wrapper">
+            <svg viewBox="0 0 200 200" width="100%" height="100%" style="overflow: visible;">
+                <defs>
+                    <linearGradient id="wood-arrow" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#D2B48C" />
+                        <stop offset="50%" stop-color="#f5deb3" />
+                        <stop offset="100%" stop-color="#8b5a2b" />
+                    </linearGradient>
+                    <linearGradient id="metal" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#a0a0a0" />
+                        <stop offset="40%" stop-color="#ffffff" />
+                        <stop offset="100%" stop-color="#606060" />
+                    </linearGradient>
+                    <linearGradient id="feather-top" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#ff4b72" />
+                        <stop offset="100%" stop-color="#b01b3b" />
+                    </linearGradient>
+                    <linearGradient id="feather-bottom" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#b01b3b" />
+                        <stop offset="100%" stop-color="#ff4b72" />
+                    </linearGradient>
+                </defs>
+                <g filter="url(#shadow)">
+                    <!-- မြှားတံ -->
+                    <rect x="40" y="96" width="120" height="8" fill="url(#wood-arrow)" rx="3"/>
+                    <!-- မြှားခေါင်း -->
+                    <path d="M 160,88 L 190,100 L 160,112 Z" fill="url(#metal)"/>
+                    <!-- အတောင်ပံများ -->
+                    <path d="M 20,96 L 50,96 L 30,80 L 10,90 Z" fill="url(#feather-top)"/>
+                    <path d="M 20,104 L 50,104 L 30,120 L 10,110 Z" fill="url(#feather-bottom)"/>
+                </g>
+            </svg>
+        </div>
+
+        <div id="explosion">Surprise! ✨</div>
+    </div>
+
+    <!-- ၂။ Surprise စာသား -->
+    <div id="surprise-section">
+        <h1>Happy 1 Year <br> Anniversary <br> 💖</h1>
+    </div>
+
+    <!-- ၃။ မေးခွန်းများ -->
+    <div id="qa-section">
+        <div id="qa-content"></div>
+        
+        <div id="final-message">
+            <div class="sticker-container">
+                <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3ZXR1YTExd2t4bDd3bjJsc3VoeHpjZ2lsNzkzZGpjcjJhcTZzYXliYiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Y9bboRSDSw0CezsCji/giphy.gif" alt="Happy Sticker" class="sticker-img">
+            </div>
+            ဒီနေ့ မောင် စုစု ကို စိတ်အချမ်းသာဆုံး ဖြစ်အောင် ထားပေးမယ်နော်...<br><br>
+            စုစု... မောင့်ရဲ့ နွေးထွေးမှု၊ ဂရုစိုက်မှုလေးတွေကို ခံစားကြည့်ပေးပါနော်။<br><br>
+            စုစု ကို အများကြီး ချစ်တယ်နော် ❤️😘
+            
+            <br>
+            <button class="ans-btn btn-back" onclick="playSoundAndReload('sound-click')">ဟုတ်ပါပြီ ရှင့်<br>Back to main</button>
+        </div>
+    </div>
+
+    <script>
+        // ---- 100% စိတ်ချရသော Web Audio API Audio Engine ----
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playSound(type) {
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                if (type === 'sound-click') {
+                    // ခလုတ်နှိပ်သံ (Crisp Click)
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(800, now);
+                    osc.frequency.exponentialRampToValueAtTime(400, now + 0.05);
+                    gain.gain.setValueAtTime(0.3, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+
+                } else if (type === 'sound-shoot') {
+                    // မြှားပစ်သံ (Whoosh / Swoosh)
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(450, now);
+                    osc.frequency.exponentialRampToValueAtTime(100, now + 0.18);
+                    gain.gain.setValueAtTime(0.5, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.18);
+
+                } else if (type === 'sound-hit') {
+                    // အသည်းပုံထိသံ (Pop / Cute Chime)
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(350, now);
+                    osc.frequency.exponentialRampToValueAtTime(850, now + 0.12);
+                    gain.gain.setValueAtTime(0.6, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+
+                } else if (type === 'sound-surprise') {
+                    // Surprise မင်္ဂလာအသံ (Magical Arpeggio Chime)
+                    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+                    notes.forEach((freq, index) => {
+                        const osc = ctx.createOscillator();
+                        const gain = ctx.createGain();
+                        const noteTime = now + (index * 0.1);
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, noteTime);
+                        gain.gain.setValueAtTime(0.35, noteTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, noteTime + 0.45);
+                        osc.connect(gain);
+                        gain.connect(ctx.destination);
+                        osc.start(noteTime);
+                        osc.stop(noteTime + 0.45);
+                    });
+                }
+            } catch (e) {
+                console.log("Audio Error:", e);
+            }
+        }
+
+        function startGame() {
+            getAudioContext(); // Touch/Click ဖြင့် Audio Context ကို Unlock လုပ်ခြင်း
+            playSound('sound-click'); 
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('game-section').style.display = 'block';
+            initGame();
+        }
+
+        // ---- လေးနှင့် မြှားပစ်သည့် Logic ----
+        const bowWrapper = document.getElementById('bow-wrapper');
+        const arrowWrapper = document.getElementById('arrow-wrapper');
+        const bowString = document.getElementById('bow-string');
+        const targetHeart = document.getElementById('target-heart');
+        const explosion = document.getElementById('explosion');
+        const instruction = document.getElementById('instruction');
+
+        let isDragging = false;
+        let originX, originY;
+        let currentAngle = -45; 
+
+        function initGame() {
+            // လေးနဲ့ မြှားကို ကနဦးအနေအထား (စောင်းလျက်) သတ်မှတ်မည်
+            bowWrapper.style.transform = `rotate(${currentAngle}deg)`;
+            arrowWrapper.style.transform = `rotate(${currentAngle}deg)`;
+            
+            let rect = arrowWrapper.getBoundingClientRect();
+            // ဗဟိုချက် (Center) တွက်ချက်ခြင်း
+            originX = rect.left + rect.width / 2;
+            originY = rect.top + rect.height / 2;
+        }
+
+        arrowWrapper.addEventListener('mousedown', startDrag);
+        window.addEventListener('mousemove', drag);
+        window.addEventListener('mouseup', endDrag);
+
+        arrowWrapper.addEventListener('touchstart', startDrag, {passive: false});
+        window.addEventListener('touchmove', drag, {passive: false});
+        window.addEventListener('touchend', endDrag);
+
+        function startDrag(e) {
+            getAudioContext(); // touch/mouse စတင်ဆွဲချိန်တွင် အသံ Unlock ပိုခိုင်မာစေရန်
+            isDragging = true;
+            instruction.style.opacity = '0'; 
+        }
+
+        function drag(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+
+            let clientX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+            let clientY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+
+            // ဆွဲသည့်ဖက်မှ ဆန့်ကျင်ဘက်သို့ ချိန်ရွယ်ရန် တွက်ချက်ခြင်း
+            let dx = originX - clientX;
+            let dy = originY - clientY;
+            currentAngle = Math.atan2(dy, dx) * 180 / Math.PI;
+            
+            let pullDistance = Math.min(Math.sqrt(dx*dx + dy*dy), 60); 
+            
+            // လေးကို လှည့်မည်
+            bowWrapper.style.transform = `rotate(${currentAngle}deg)`;
+            
+            // မြှားကို လှည့်ပြီး နောက်သို့ဆွဲမည် (-X ဝင်ရိုး)
+            arrowWrapper.style.transform = `rotate(${currentAngle}deg) translateX(-${pullDistance}px)`;
+
+            // လေးကြိုးကို နောက်သို့ ကွေးစေမည် (Dynamic String)
+            bowString.setAttribute('d', `M 120,20 L ${120 - pullDistance},100 L 120,180`);
+        }
+
+        function endDrag(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            shootArrow();
+        }
+
+        function shootArrow() {
+            playSound('sound-shoot');
+            
+            // လေးကြိုးကို မူလအတိုင်း တင်းခနဲ ပြန်ဖြောင့်သွားစေမည်
+            bowString.setAttribute('d', `M 120,20 L 120,100 L 120,180`);
+            
+            // အသည်းပုံ (Target) ၏ ဗဟိုချက်
+            const targetRect = targetHeart.getBoundingClientRect();
+            const targetX = targetRect.left + (targetRect.width / 2);
+            const targetY = targetRect.top + (targetRect.height / 2);
+
+            // မြှားမှ အသည်းပုံဆီသို့ အကွာအဝေး (Distance) ကို တွက်မည်
+            // (Rotate လုပ်ထားပြီးသားဖြစ်သဖြင့် X ဝင်ရိုးအတိုင်း တည့်တည့်ပစ်ရုံသာဖြစ်သည်)
+            const distance = Math.hypot(targetX - originX, targetY - originY) - 30; // 30px လျှော့ထားသည် (အလယ်ဗဟိုထိသွားအောင်)
+
+            // မြှား ပျံသန်းမည့် Animation
+            arrowWrapper.style.transition = 'transform 0.35s ease-in';
+            arrowWrapper.style.transform = `rotate(${currentAngle}deg) translateX(${distance}px)`;
+            
+            setTimeout(() => {
+                arrowWrapper.style.display = 'none';
+                targetHeart.style.display = 'none';
+                bowWrapper.style.display = 'none';
+                
+                playSound('sound-hit'); 
+                
+                explosion.style.display = 'block';
+                setTimeout(() => {
+                    explosion.style.transform = 'translate(10%, -10%) scale(1)';
+                    explosion.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                }, 10);
+
+                setTimeout(() => {
+                    document.getElementById('game-section').style.display = 'none';
+                    showSurpriseText();
+                }, 1000); 
+
+            }, 350); // 0.35 စက္ကန့်အကြာတွင် ထိမည်
+        }
+
+        // ---- Surprise စာသား ----
+        function showSurpriseText() {
+            playSound('sound-surprise');
+            const surpriseSec = document.getElementById('surprise-section');
+            surpriseSec.style.display = 'flex';
+            
+            setTimeout(() => { surpriseSec.style.opacity = '1'; }, 50);
+
+            setTimeout(() => {
+                surpriseSec.style.opacity = '0';
+                setTimeout(() => {
+                    surpriseSec.style.display = 'none';
+                    startQA();
+                }, 1000);
+            }, 3500);
+        }
+
+        // ---- Q&A Logic ----
+        const questions = [
+            {
+                q: "၁။ ဒီနေ့ မောင့်ကို လာတွေ့ရတာ ပျော်လား အချစ်ကလေး",
+                btnYes: "ပျော်တယ်",
+                btnNo: "မပျော်ဘူး",
+                stickerLink: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ295Nnp0amVpdWVrNDNmdGxiaXI0bjJpbmg1cWRkNWRsNmpmd3hlOCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xR5cPyPoL5HVXSphqA/giphy.gif" 
+            },
+            {
+                q: "၂။ စုစု မောင့်နားမှာ မောင့်ရဲ့ အချစ်ရဆုံး မိန်းကလေးအဖြစ် အမြဲတမ်း ရှိနေပေးနိုင်မလား",
+                btnYes: "ရှိနေပေးပါ့မယ် ရှင့်",
+                btnNo: "No 🤪",
+                stickerLink: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ295Nnp0amVpdWVrNDNmdGxiaXI0bjJpbmg1cWRkNWRsNmpmd3hlOCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qfQgXxBz1nvWEbOxyb/giphy.gif"
+            },
+            {
+                q: "၃။ ရည်းစားဖြစ်လာတာ တစ်နှစ်ကျော်ပြီဆိုတော့ မောင့်ကို ပိုချစ်လာသလား 🤭",
+                btnYes: "အများကြီး ပိုချစ်လာတယ်",
+                btnNo: "နည်းနည်းပဲ ပိုချစ်ပါတယ်",
+                stickerLink: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ295Nnp0amVpdWVrNDNmdGxiaXI0bjJpbmg1cWRkNWRsNmpmd3hlOCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Yle9Yz9izeVRyiwavn/giphy.gif"
+            },
+            {
+                q: "၄။ ဒီနေ့အတွက် ရင်ခုန်နေလား",
+                btnYes: "ရင်ခုန်နေတယ်",
+                btnNo: "ရင်မခုန်ဘူး",
+                stickerLink: "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3eWVtYW1qZDI0OGZlOXlra2x4OTU2OHZ4dTQzYnQ3aWtlNndydHdkdiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/gDfteqLchLcRTtjAD7/giphy.gif"
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function startQA() {
+            const qaSection = document.getElementById('qa-section');
+            qaSection.style.display = 'block';
+            setTimeout(() => { qaSection.style.opacity = '1'; showQuestion(); }, 50);
+        }
+
+        function showQuestion() {
+            if (currentQuestion < questions.length) {
+                const qData = questions[currentQuestion];
+                
+                let html = `
+                    <div class="sticker-container">
+                        <img src="${qData.stickerLink}" alt="Sticker" class="sticker-img">
+                    </div>
+                    <div id="question-text">${qData.q}</div>
+                    <div class="btn-group">
+                        <!-- နှိပ်တိုင်း အသံထွက်စေရန် onclick တွင် playSound ထည့်ထားသည် -->
+                        <button class="ans-btn btn-yes" onclick="playSound('sound-click'); nextQuestion();">${qData.btnYes}</button>
+                        <button class="ans-btn btn-no" id="no-btn" onmouseover="moveNoButton(event)" ontouchstart="moveNoButton(event)">${qData.btnNo}</button>
+                    </div>
+                `;
+                
+                document.getElementById('qa-content').innerHTML = html;
+                
+            } else {
+                document.getElementById('qa-content').style.display = 'none';
+                document.getElementById('final-message').style.display = 'block';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            // မေးခွန်းကူးရန် အနည်းငယ် Delay ပေးခြင်းဖြင့် အသံထွက်ချိန်ရစေမည်
+            setTimeout(showQuestion, 150); 
+        }
+
+        // ---- No Button စာမကွယ်အောင် တားဆီးထားသော Logic ----
+        function moveNoButton(e) {
+            if(e) e.preventDefault();
+            const noBtn = document.getElementById('no-btn');
+            const qaContent = document.getElementById('qa-content');
+            
+            const qaRect = qaContent.getBoundingClientRect();
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.transition = 'left 0.2s ease, top 0.2s ease';
+            
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            
+            // စာအောက်မှာပဲ နေအောင် Limit လုပ်ထားခြင်း
+            const safeMinY = qaRect.bottom + 20; 
+            
+            let randomY;
+            if (safeMinY < maxY) {
+                randomY = safeMinY + Math.random() * (maxY - safeMinY);
+            } else {
+                randomY = maxY; 
+            }
+            
+            const randomX = Math.max(10, Math.random() * maxX);
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        // နောက်ဆုံး ခလုတ်နှိပ်လျှင် အသံမြည်ပြီး Refresh လုပ်မည်
+        function playSoundAndReload(soundId) {
+            playSound(soundId);
+            setTimeout(() => {
+                location.reload(); 
+            }, 300);
+        }
+    </script>
+</body>
+</html>
